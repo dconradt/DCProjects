@@ -25,14 +25,14 @@ public class Project1 {
       }
       System.exit(1);
 
-      String startTime = null; // Used to hold the start time from the argument list.
-      String endTime = null; // Used to hold the end time from the argument list.
+      //String startTime = null; // Used to hold the start time from the argument list.
+     // String endTime = null; // Used to hold the end time from the argument list.
      // startTime = args[5] + " " + args[6]; // Contatenate the array argument into a valid date time format
      // endTime = args[7] + " " + args[8]; // Contatenate the array argument into a valid date time format
-     // System.out.println(args[5] + " " + args[6] + " - " + args[7] + " " + args[8]);
+      //System.out.println(args[5] + " " + args[6] + " - " + args[7] + " " + args[8]);
 
 
-      for(int i =0; i<7; ++i){
+      /*for(int i =0; i<7; ++i){
           System.out.println(args[i] + "\n");
           if(i == 5)
               startTime = args[5] + " " + args[6];
@@ -40,7 +40,7 @@ public class Project1 {
               endTime = args[7] + " " + args[8];
       }
       System.out.println(startTime + " - " + endTime + "\n");
-      System.out.println("Finished");
+      System.out.println("Finished");*/
 
 
 
