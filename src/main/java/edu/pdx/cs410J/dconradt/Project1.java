@@ -88,7 +88,7 @@ public class Project1 {
 
     // Verify the date formatting is correct. Java regex pattern and matcher are used to describe the required input. Returns the value
     // of the successful or failur of a match.
-    private static boolean verifyDateFormat(String date) {
+    public static boolean verifyDateFormat(String date) {
         String dateToCheck = date;
         Pattern datePattern = Pattern.compile("(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/(20\\d\\d) ([01]?[0-9]|2[0-3]):[0-5][0-9]");
         Matcher dateCorrect = datePattern.matcher(dateToCheck);
@@ -98,7 +98,7 @@ public class Project1 {
 
     // Verify the phone number formatting is correct. Java regex pattern and matcher are used to describe the required input. Returns the value
     // of the successful or failur of a match.
-    private static boolean verifyPhoneNumber(String phoneNumber) {
+    public static boolean verifyPhoneNumber(String phoneNumber) {
         String checkPhoneNumber = phoneNumber;
         Pattern numberPattern = Pattern.compile("\\d{3}-\\d{3}-\\d{4}");
         Matcher numberPatternMatch = numberPattern.matcher(checkPhoneNumber);

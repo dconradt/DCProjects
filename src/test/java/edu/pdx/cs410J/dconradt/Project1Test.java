@@ -1,6 +1,9 @@
 package edu.pdx.cs410J.dconradt;
 
+import junit.framework.Assert;
 import org.junit.Test;
+
+import static org.junit.Assert.assertThat;
 import static org.junit.Assert.assertTrue;
 import edu.pdx.cs410J.InvokeMainTestCase;
 import static junit.framework.Assert.assertEquals;
@@ -32,7 +35,17 @@ public class Project1Test extends InvokeMainTestCase {
      */
     @Test
     public void testValidDateTimeFormat(){
-        Project1 newProject = new Project1;
-        assertTrue(newProject.verifyDateFormat(111), true);
+        Project1 newProject = new Project1();
+        assertTrue(newProject.verifyDateFormat("11/21/2015 12:21"));
     }
+
+    /*
+    * Tests the phone number format
+     */
+    @Test
+    public void testValidPhoneNumber(){
+        Project1 newProject = new Project1();
+        assertTrue(newProject.verifyPhoneNumber("123-456-7777"));
+    }
+
 }
