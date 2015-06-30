@@ -15,76 +15,81 @@ import java.util.regex.Pattern;
  * and will not be quoted.
  */
 public class Project1 {
-
+    static PhoneBill newBill = new PhoneBill(); // Instance of a phone bill to pass the new call to.
+    static PhoneCall newCall = new PhoneCall();// Instance of a newCall to record
 
   public static void main(String[] args) {
-      PhoneBill newBill = new PhoneBill(); // Instance of a phone bill to pass the new call to.
-      PhoneCall newCall = new PhoneCall();// Instance of a newCall to record
-      int length = args.length;// Get the number of arguments passed in
-      String [] phoneCall = new String[length]; // Set the array size for the phone call record to be passed to the phone bill.
-      boolean success = false; // Used to verify the success of reading command line arguments.
-      boolean print = false; // Print flag set when option to print is requested.
-      boolean readMe = false; // Sets the README flag to print a README for this project then exits.
       Class c = AbstractPhoneBill.class;  // Refer to one of Dave's classes so that we can be sure it is on the classpath
       System.err.println("Missing command line arguments");
       for (String arg : args) {
           System.out.println(arg);
       }
 
-      // Verify there are the appropriate number of arguments
-      if(length != 9) {
-          exitProgram("Invalid number of arguments!");
-      }
-
-
-      //Iterate through the arguments, verify format where appropriate and populate the phone call array.
-      for(int i = 0; i < length ; i++){
-          if(args[i].equalsIgnoreCase("-print"))
-              print = true;
-          else if (args[i].equalsIgnoreCase("-README"))
-              readMe = true;
-          else if(i == 2)
-              newBill.setCustomer(args[i]);
-          else if(i == 3 || i == 4){
-              success = verifyPhoneNumber(args[i]);
-              if(success){
-                  if(i == 3)
-                      newCall.setCallerNumber(args[i]);
-                  else
-                      newCall.setCalleeNumber(args[i]);
-              }
-              else{
-                  exitProgram("The phone number must be of the form nnn-nnn-nnnn");
-              }
-          }
-          else if(i == 5 || i == 7){
-              String timeStamp = args[i] + " " + args[i+1];
-              success = verifyDateFormat(timeStamp);
-              if (success) {
-                  if(i == 5)
-                      newCall.setStartTime(timeStamp);
-                  else
-                      newCall.setEndTime(timeStamp);
-              }
-              else{
-                  exitProgram("The date and time must be of the format dd/mm/yyy/ hh:mm");
-              }
-          }
-      }
-      if(success){
-          newBill.addPhoneCall(newCall);
-          if(print)
-              System.out.println(newCall.toString());
-          if(readMe) {
-              System.out.println("README");
-              System.exit(1);
-          }
-      }
+      processCommandLine(args);// Process the command line arguments
 
       System.exit(1);
 
   }
 
+    //Parse the commmand line arguements
+    public static void processCommandLine(String [] args){
+
+        int length = args.length;// Get the number of arguments passed in
+        String [] phoneCall = new String[length]; // Set the array size for the phone call record to be passed to the phone bill.
+        boolean success = false; // Used to verify the success of reading command line arguments.
+        boolean print = false; // Print flag set when option to print is requested.
+        boolean readMe = false; // Sets the README flag to print a README for this project then exits.
+
+        // Verify there are the appropriate number of arguments
+        if(length != 9) {
+            exitProgram("Invalid number of arguments!");
+        }
+
+
+        //Iterate through the arguments, verify phone number and date/time formats where appropriate and populate the phone call array.
+        for(int i = 0; i < length ; i++){
+            if(args[i].equalsIgnoreCase("-print"))
+                print = true;
+            else if (args[i].equalsIgnoreCase("-README"))
+                readMe = true;
+            else if(i == 2)
+                newBill.setCustomer(args[i]);
+            else if(i == 3 || i == 4){
+                success = verifyPhoneNumber(args[i]);
+                if(success){
+                    if(i == 3)
+                        newCall.setCallerNumber(args[i]);
+                    else
+                        newCall.setCalleeNumber(args[i]);
+                }
+                else{
+                    exitProgram("The phone number must be of the form nnn-nnn-nnnn");
+                }
+            }
+            else if(i == 5 || i == 7){
+                String timeStamp = args[i] + " " + args[i+1];
+                success = verifyDateFormat(timeStamp);
+                if (success) {
+                    if(i == 5)
+                        newCall.setStartTime(timeStamp);
+                    else
+                        newCall.setEndTime(timeStamp);
+                }
+                else{
+                    exitProgram("The date and time must be of the format dd/mm/yyy/ hh:mm");
+                }
+            }
+        }
+        if(success){
+            newBill.addPhoneCall(newCall);
+            if(print)
+                System.out.println("\nPhone Bill Customer Name: " + newBill.getCustomer() + "\n" + newCall.toString());
+            if(readMe) {
+                System.out.println("README");
+                System.exit(1);
+            }
+        }
+    }
 
     // Verify the date formatting is correct. Java regex pattern and matcher are used to describe the required input. Returns the value
     // of the successful or failur of a match.
