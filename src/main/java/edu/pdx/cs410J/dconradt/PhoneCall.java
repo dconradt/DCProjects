@@ -8,14 +8,20 @@ import java.util.Date;
  */
 public class PhoneCall extends AbstractPhoneCall {
 
+
+    private String endTime;
+    private String callerNumber;
+    private String calleeNumber;
+    private String startTime;
+
     @Override
     public String getCallee() {
-        return null;
+        return calleeNumber;
     }
 
     @Override
     public String getCaller() {
-        return null;
+        return callerNumber;
     }
 
     @Override
@@ -30,11 +36,28 @@ public class PhoneCall extends AbstractPhoneCall {
 
     @Override
     public String getEndTimeString() {
-        return null;
+        return endTime;
     }
 
     @Override
     public String getStartTimeString() {
-        return null;
+        return startTime;
+    }
+
+
+    public void setCallerNumber(String callerNumber) {
+        this.callerNumber = callerNumber;
+    }
+
+    public void setCalleeNumber(String calleeNumber) {
+        this.calleeNumber = calleeNumber;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
+
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
     }
 }

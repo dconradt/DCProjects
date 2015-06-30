@@ -10,12 +10,18 @@ import java.util.Collection;
  * Created by Dan Conradt on 6/28/2015.
  */
 public class PhoneBill extends AbstractPhoneBill {
-    private static String customerName; // Customer Name of phone bill
-    ArrayList customerCalls = new ArrayList();// List of calls to appear on the customer phone bill
+
+    private String customer;
+    private ArrayList phoneCalls = new ArrayList();
 
     @Override
     public void addPhoneCall(AbstractPhoneCall abstractPhoneCall) {
-        customerCalls.add(abstractPhoneCall);
+        phoneCalls.add(abstractPhoneCall);
+    }
+
+    @Override
+    public Collection getPhoneCalls() {
+        return null;
     }
 
     @Override
@@ -23,9 +29,7 @@ public class PhoneBill extends AbstractPhoneBill {
         return null;
     }
 
-    @Override
-    public Collection getPhoneCalls() {
-        // Return the arraylist of customer calls
-        return customerCalls;
+    public void setCustomer(String customer) {
+        this.customer = customer;
     }
 }

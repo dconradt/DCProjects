@@ -18,10 +18,13 @@ public class Project1 {
 
 
   public static void main(String[] args) {
-      PhoneBill newBill = new PhoneBill();
-      int length = args.length;// Get the number of argments passed in
+      PhoneBill newBill = new PhoneBill(); // Instance of a phone bill to pass the new call to.
+      PhoneCall newCall = new PhoneCall();// Instance of a newCall to record
+      int length = args.length;// Get the number of arguments passed in
       String [] phoneCall = new String[length]; // Set the array size for the phone call record to be passed to the phone bill.
       boolean success = false; // Used to verify the success of reading command line arguments.
+      boolean print = false; // Print flag set when option to print is requested.
+      boolean readMe = false; // Sets the README flag to print a README for this project then exits.
       Class c = AbstractPhoneBill.class;  // Refer to one of Dave's classes so that we can be sure it is on the classpath
       System.err.println("Missing command line arguments");
       for (String arg : args) {
@@ -36,14 +39,19 @@ public class Project1 {
 
       //Iterate through the arguments, verify format where appropriate and populate the phone call array.
       for(int i = 0; i < length ; i++){
-          success = false;
-          if(i == 2) {
-              phoneCall[i] = args[i];
-          }
+          if(args[i].equalsIgnoreCase("-print"))
+              print = true;
+          else if (args[i].equalsIgnoreCase("-README"))
+              readMe = true;
+          else if(i == 2)
+              newBill.setCustomer(args[i]);
           else if(i == 3 || i == 4){
               success = verifyPhoneNumber(args[i]);
               if(success){
-                  phoneCall[i] = args[i];
+                  if(i == 3)
+                      newCall.setCallerNumber(args[i]);
+                  else
+                      newCall.setCalleeNumber(args[i]);
               }
               else{
                   exitProgram("The phone number must be of the form nnn-nnn-nnnn");
@@ -53,7 +61,10 @@ public class Project1 {
               String timeStamp = args[i] + " " + args[i+1];
               success = verifyDateFormat(timeStamp);
               if (success) {
-                  phoneCall[i] = timeStamp;
+                  if(i == 5)
+                      newCall.setStartTime(timeStamp);
+                  else
+                      newCall.setEndTime(timeStamp);
               }
               else{
                   exitProgram("The date and time must be of the format dd/mm/yyy/ hh:mm");
@@ -61,7 +72,13 @@ public class Project1 {
           }
       }
       if(success){
-          newBill.addPhoneCall(phoneCall);
+          newBill.addPhoneCall(newCall);
+          if(print)
+              System.out.println(newCall.toString());
+          if(readMe) {
+              System.out.println("README");
+              System.exit(1);
+          }
       }
 
       System.exit(1);

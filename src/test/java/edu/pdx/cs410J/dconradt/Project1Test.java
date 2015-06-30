@@ -17,14 +17,22 @@ public class Project1Test extends InvokeMainTestCase {
         return invokeMain( Project1.class, args );
     }
 
-  /**
-   * Tests that invoking the main method with no arguments issues an error
-   */
-  @Test
-  public void testNoCommandLineArguments() {
-    MainMethodResult result = invokeMain();
-    assertEquals(new Integer(1), result.getExitCode());
-    assertTrue(result.getErr().contains( "Missing command line arguments" ));
-  }
+    /**
+    * Tests that invoking the main method with no arguments issues an error
+    */
+    @Test
+    public void testNoCommandLineArguments() {
+        MainMethodResult result = invokeMain();
+        assertEquals(new Integer(1), result.getExitCode());
+        assertTrue(result.getErr().contains( "Missing command line arguments" ));
+    }
 
+    /*
+     * Tests the verify date format function.
+     */
+    @Test
+    public void testValidDateTimeFormat(){
+        Project1 newProject = new Project1;
+        assertTrue(newProject.verifyDateFormat(111), true);
+    }
 }
