@@ -88,7 +88,11 @@ public class Project1 {
         if (print)
             System.out.println(newCall.toString());
         if(readMe) {
-            System.out.println("README");
+            System.out.println("\n**README**\nDan Conradt\nProject1\nI have implemented three classes - Project1, PhoneBill and PhoneCall. PhonebBill and PhoneCall extend the AbstractPhoneBill and AbstractPhoneCall classes respectively\n" +
+                    "This program takes an input of upto 2 options and requires 5 arguments describing a phone call.  It validates the options and arguments for validity and formatting.\nThe date and time must be " +
+                    "actual dates in the form specified as mm/dd/yyyy hh:mm.  The Phone numbers must be of the form nnn-nnn-nnnn.  Errors in formating or validity\nof the phone numbers or date and time will output a message and the program will exit.  " +
+                    "If all arguments are valid the program will create an new phone call record\nusing an array list of phone calls in the phone bill class.  If the option -print is provided then the program " +
+                    "will output the phone call from the given parameters." );
             System.exit(1);
         }
     }
@@ -118,4 +122,5 @@ public class Project1 {
         System.out.println(description);
         System.exit(1);
     }
+
 }
