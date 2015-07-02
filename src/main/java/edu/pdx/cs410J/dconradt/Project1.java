@@ -20,10 +20,10 @@ public class Project1 {
 
   public static void main(String[] args) {
       Class c = AbstractPhoneBill.class;  // Refer to one of Dave's classes so that we can be sure it is on the classpath
-      System.err.println("Missing command line arguments");
-      for (String arg : args) {
-          System.out.println(arg);
-      }
+     // System.err.println("Missing command line arguments");
+     // for (String arg : args) {
+        //  System.out.println(arg);
+     // }
 
       processCommandLine(args);// Process the command line arguments
 
@@ -34,60 +34,62 @@ public class Project1 {
     //Parse the commmand line arguements
     public static void processCommandLine(String [] args){
 
-        int length = args.length;// Get the number of arguments passed in
-        String [] phoneCall = new String[length]; // Set the array size for the phone call record to be passed to the phone bill.
+        String [] options = new String[2];
+        String [] arguments = new String [6];
+        String timeStamp = null;
+        String [] phoneCall = new String[arguments.length]; // Set the array size for the phone call record to be passed to the phone bill.
+        int argIndex = 0;
+        int optionIndex = 0;
         boolean success = false; // Used to verify the success of reading command line arguments.
         boolean print = false; // Print flag set when option to print is requested.
         boolean readMe = false; // Sets the README flag to print a README for this project then exits.
 
-        // Verify there are the appropriate number of arguments
-        if(length != 9) {
-            exitProgram("Invalid number of arguments!");
-        }
-
-
         //Iterate through the arguments, verify phone number and date/time formats where appropriate and populate the phone call array.
-        for(int i = 0; i < length ; i++){
-            if(args[i].equalsIgnoreCase("-print"))
+        for(int i = 0; i < 2 ; i++) {
+            if (args[i].equalsIgnoreCase("-print")) {
+                options[i] = args[i];
                 print = true;
-            else if (args[i].equalsIgnoreCase("-README"))
+            } else if (args[i].equalsIgnoreCase("-README"))            {
+                options[i] = args[i];
                 readMe = true;
-            else if(i == 2)
-                newBill.setCustomer(args[i]);
-            else if(i == 3 || i == 4){
-                success = verifyPhoneNumber(args[i]);
-                if(success){
-                    if(i == 3)
-                        newCall.setCallerNumber(args[i]);
-                    else
-                        newCall.setCalleeNumber(args[i]);
-                }
-                else{
-                    exitProgram("The phone number must be of the form nnn-nnn-nnnn");
-                }
             }
-            else if(i == 5 || i == 7){
-                String timeStamp = args[i] + " " + args[i+1];
-                success = verifyDateFormat(timeStamp);
-                if (success) {
-                    if(i == 5)
-                        newCall.setStartTime(timeStamp);
-                    else
-                        newCall.setEndTime(timeStamp);
-                }
-                else{
-                    exitProgram("The date and time must be of the format dd/mm/yyy/ hh:mm");
-                }
-            }
+            argIndex = i;
         }
-        if(success){
-            newBill.addPhoneCall(newCall);
-            if(print)
-                System.out.println("\nPhone Bill Customer Name: " + newBill.getCustomer() + "\n" + newCall.toString());
-            if(readMe) {
-                System.out.println("README");
-                System.exit(1);
-            }
+
+        newBill.setCustomer(args[argIndex + 1]);
+
+        success = verifyPhoneNumber(args[argIndex + 2]);
+        if(success)
+            newCall.setCallerNumber(args[argIndex + 2]);
+        else
+            exitProgram("The phone number is invalid or the form nnn-nnn-nnnn.");
+
+        success = verifyPhoneNumber(args[argIndex + 3]);
+        if(success)
+            newCall.setCalleeNumber(args[argIndex + 3]);
+        else
+            exitProgram("The phone number is invalid or the form nnn-nnn-nnnn.");
+
+        timeStamp = args[argIndex + 4] + " " + args[argIndex + 5];
+        success = verifyDateFormat(timeStamp);
+        if (success)
+            newCall.setStartTime(timeStamp);
+        else
+            exitProgram("The date and time must be of the format dd/mm/yyy/ hh:mm");
+
+        timeStamp = args[argIndex + 6] + " " + args[argIndex + 7];
+        success = verifyDateFormat(timeStamp);
+        if (success)
+            newCall.setEndTime(timeStamp);
+        else
+            exitProgram("The date and time must be of the format dd/mm/yyy/ hh:mm");
+
+        newBill.addPhoneCall(newCall);
+        if (print)
+            System.out.println(newCall.toString());
+        if(readMe) {
+            System.out.println("README");
+            System.exit(1);
         }
     }
 
