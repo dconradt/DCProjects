@@ -46,7 +46,7 @@ public class Project1 {
         boolean readMe = false; /** Sets the README flag to print a README for this project then exits.*/
 
         /** Iterate through the arguments, verify phone number and date/time formats where appropriate and populate the phone call array. */
-        for(int i = 0; i < 2 ; i++) {
+        for(int i = 0; i < 2 ; ++i) {
             if (args[i].equalsIgnoreCase("-print")) {
                 options[i] = args[i];
                 print = true;
@@ -89,12 +89,12 @@ public class Project1 {
 
         newBill.addPhoneCall(newCall);
         if (print)
-            System.out.println(newCall.toString());
+            System.out.println("\n" + newCall.toString());
         if(readMe) {
-            System.out.println("\n**README**\nDan Conradt\nProject1\nI have implemented three classes - Project1, PhoneBill and PhoneCall. PhonebBill and PhoneCall extend the AbstractPhoneBill and AbstractPhoneCall classes respectively\n" +
-                    "This program takes an input of upto 2 options and requires 5 arguments describing a phone call.  It validates the options and arguments for validity and formatting.\nThe date and time must be " +
-                    "actual dates in the form specified as mm/dd/yyyy hh:mm.  The Phone numbers must be of the form nnn-nnn-nnnn.  Errors in formating or validity\nof the phone numbers or date and time will output a message and the program will exit.  " +
-                    "If all arguments are valid the program will create an new phone call record\nusing an array list of phone calls in the phone bill class.  If the option -print is provided then the program " +
+            System.out.println("\n***README***\n\nDan Conradt - Project1\n\nI have implemented three classes - Project1, PhoneBill and PhoneCall. PhonebBill and PhoneCall\nextend the AbstractPhoneBill and AbstractPhoneCall classes respectively" +
+                    "This program takes\nan input of upto 2 options and requires 5 arguments describing a phone call.  It validates the\noptions and arguments for validity and formatting.  The date and time must be " +
+                    "actual dates in the\nform specified as mm/dd/yyyy hh:mm.  The Phone numbers must be of the form nnn-nnn-nnnn.\nErrors in formating or validity of the phone numbers or date and time will output a message\nand the program will exit.  " +
+                    "If all arguments are valid the program will create an new phone call\nrecord using an array list of phone calls in the phone bill class.  If the option -print is\nprovided then the program " +
                     "will output the phone call from the given parameters." );
             System.exit(1);
         }
@@ -109,7 +109,7 @@ public class Project1 {
      */
     public static boolean verifyDateFormat(String date) {
         String dateToCheck = date;
-        Pattern datePattern = Pattern.compile("(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/(20\\d\\d) ([01]?[0-9]|2[0-3]):[0-5][0-9]");
+        Pattern datePattern = Pattern.compile("(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/(\\d\\d\\d\\d) ([01]?[0-9]|2[0-3]):[0-5][0-9]");
         Matcher dateCorrect = datePattern.matcher(dateToCheck);
         return dateCorrect.matches();
     }
