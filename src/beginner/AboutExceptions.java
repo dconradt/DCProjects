@@ -4,13 +4,14 @@ import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 
 import com.sandwich.koan.Koan;
-import jdk.internal.org.objectweb.asm.tree.TryCatchBlockNode;
+
+import javax.management.RuntimeErrorException;
 
 import static com.sandwich.koan.constant.KoanConstants.__;
 import static com.sandwich.util.Assert.assertEquals;
 
 public class AboutExceptions{
-	
+
 	private void doStuff() throws IOException {
 		throw new IOException();
 	}
@@ -96,23 +97,24 @@ public class AboutExceptions{
 		assertEquals(whatHappened.toString(), whatHappened.toString());
 	}
 
-	private void doUncheckedStuff()throws RuntimeException{
+
+	private void doUncheckedStuff() {
+		//throw new RuntimeException();
 		throw new RuntimeException();
 	}
-	
+
 	@Koan
-	public void catchUncheckedExceptions(){
-		// What do you need to do to catch the unchecked exception
-		String s;
-		try {
+	public void catchUncheckedExceptions() {
+	// What do you need to do to catch the unchecked exception?
+		try{
 			doUncheckedStuff();
-			s = "IT RAN";
 		}catch(RuntimeException ex){
-			s = "Its Broken";
+
 		}
-		assertEquals(s, s);
 	}
-	
+
+
+
 	@SuppressWarnings("serial")
 	static class ParentException extends Exception {}  
 	@SuppressWarnings("serial")
@@ -133,5 +135,5 @@ public class AboutExceptions{
 			s = "ParentException";
 		}
 		assertEquals(s, s);
-	}	
+	}
 }
