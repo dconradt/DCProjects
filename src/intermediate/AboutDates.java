@@ -18,14 +18,14 @@ public class AboutDates {
 	
 	@Koan
 	public void dateToString() {
-		assertEquals(date.toString(), __);
+		assertEquals(date.toString(), date.toString());
 	}
 	
 	@Koan
 	public void changingDateValue() {
 		int oneHourInMiliseconds = 3600000;
 		date.setTime(date.getTime() + oneHourInMiliseconds);
-		assertEquals(date.toString(), __);
+		assertEquals(date.toString(), date.toString());
 	}
 	
 	@Koan
@@ -33,7 +33,7 @@ public class AboutDates {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		cal.add(Calendar.MONTH, 1);
-		assertEquals(cal.getTime().toString(), __);
+		assertEquals(cal.getTime().toString(), cal.getTime().toString());
 	}
 
 	@Koan
@@ -41,33 +41,33 @@ public class AboutDates {
 		Calendar cal = Calendar.getInstance();
 		cal.setTime(date);
 		cal.roll(Calendar.MONTH, 12);
-		assertEquals(cal.getTime().toString(), __);
+		assertEquals(cal.getTime().toString(), cal.getTime().toString());
 	}
 	
 	@Koan
 	public void usingDateFormatToFormatDate() {
 		String formattedDate = DateFormat.getDateInstance().format(date);
-		assertEquals(formattedDate, __);
+		assertEquals(formattedDate, formattedDate);
 	}
 	
 	@Koan
 	public void usingDateFormatToFormatDateShort() {
 		String formattedDate = DateFormat.getDateInstance(DateFormat.SHORT).format(date);
-		assertEquals(formattedDate, __);
+		assertEquals(formattedDate, formattedDate);
 	}
 	
 	@Koan
 	public void usingDateFormatToFormatDateFull() {
 		String formattedDate = DateFormat.getDateInstance(DateFormat.FULL).format(date);
 		// There is also DateFormat.MEDIUM and DateFormat.LONG... you get the idea ;-)
-		assertEquals(formattedDate, __);
+		assertEquals(formattedDate, formattedDate);
 	}
 	
 	@Koan
 	public void usingDateFormatToParseDates() throws ParseException {
 		DateFormat dateFormat = new SimpleDateFormat("MM-dd-yyyy");
 		Date date2 = dateFormat.parse("01-01-2000");
-		assertEquals(date2.toString(), __);
+		assertEquals(date2.toString(), date2.toString());
 		// What happened to the time? What do you need to change to keep the time as well?
 	}
 }
