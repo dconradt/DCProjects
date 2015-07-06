@@ -7,7 +7,7 @@ import java.util.regex.Pattern;
 
 /**
  * The main class for the CS410J Phone Bill Project
- * Dan Conradt
+ * @author Dan Conradt
  * 6/29/2015
  * This class will parse command line args ([options] <args>) and validate correct format for each option and argument. Options may include -README and -print.
  * Argument list is in the order of customer. callerNumber, calleeNumber, startTime, endTime. Multi phrase customer names will be enclosed
@@ -50,7 +50,15 @@ public class Project1 {
             if (args[i].equalsIgnoreCase("-print")) {
                 options[i] = args[i];
                 print = true;
-            } else if (args[i].equalsIgnoreCase("-README")){
+            } else if (args[i].equalsIgnoreCase("-README") &&!print) {
+                System.out.println("\n***README***\n\nDan Conradt - Project1\n\nI have implemented three classes - Project1, PhoneBill and PhoneCall. PhonebBill and PhoneCall\nextend the AbstractPhoneBill and AbstractPhoneCall classes respectively" +
+                        "This program takes\nan input of upto 2 options and requires 5 arguments describing a phone call.  It validates the\noptions and arguments for validity and formatting.  The date and time must be " +
+                        "actual dates in the\nform specified as mm/dd/yyyy hh:mm.  The Phone numbers must be of the form nnn-nnn-nnnn.\nErrors in formating or validity of the phone numbers or date and time will output a message\nand the program will exit.  " +
+                        "If all arguments are valid the program will create an new phone call\nrecord using an array list of phone calls in the phone bill class.  If the option -print is\nprovided then the program " +
+                        "will output the phone call from the given parameters.");
+                System.exit(1);
+            }
+            else if(args[i].equalsIgnoreCase("-README") ){
                 options[i] = args[i];
                 readMe = true;
             }

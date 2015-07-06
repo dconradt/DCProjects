@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * Created by Dan Conradt on 6/28/2015.
+ * @author Dan Conradt on 6/28/2015.
  * The PhomeBill class will keep an array list of phone calls and manage the PhoneBill customer name.
  * Private variable customer to hold the phone bill customer name and an arrayList of phone calls associated
  * with the phone bill.
