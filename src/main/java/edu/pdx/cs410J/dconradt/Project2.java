@@ -16,7 +16,7 @@ import java.util.regex.Pattern;
  *
  *
  */
-public class Project1 {
+public class Project2 {
     static PhoneBill newBill = new PhoneBill(); // Instance of a phone bill to pass the new call to.
     static PhoneCall newCall = new PhoneCall();// Instance of a newCall to record
 
