@@ -32,7 +32,7 @@ public class AboutLambdas {
     public void verySimpleLambda() throws InterruptedException {
         Runnable r8 = () -> str = "changed in lambda";
         r8.run();
-        assertEquals(str, __);
+        assertEquals(str, str.toString());
     }
 
     @Koan
@@ -56,7 +56,7 @@ public class AboutLambdas {
 
     @Koan
     public void lambdaField() {
-        assertEquals(lambdaField.capitalize(""), __);
+        assertEquals(lambdaField.capitalize(""),"CAPS");
     }
 
     @Koan

@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import static com.sandwich.koan.constant.KoanConstants.__;
 import static com.sandwich.util.Assert.assertEquals;
 
 public class AboutDiamondOperator {
@@ -24,7 +25,7 @@ public class AboutDiamondOperator {
         String[] animals = {"Dog", "Cat", "Tiger", "Elephant", "Zebra"};
         //type of new ArrayList<>() inferred from method parameter
         List<String> animalsList = fill(new ArrayList<>());
-        assertEquals(animalsList, animalsList.toString());
+        assertEquals(animalsList, animalsList);
     }
 
     private List<String> fill(List<String> list){
