@@ -2,13 +2,14 @@ package edu.pdx.cs410J.dconradt;
 
 import edu.pdx.cs410J.AbstractPhoneBill;
 
+import java.io.File;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * The main class for the CS410J Phone Bill Project
  * @author Dan Conradt
- * 6/29/2015
+ * 7/8/2015
  * This class will parse command line args ([options] <args>) and validate correct format for each option and argument. Options may include -README and -print.
  * Argument list is in the order of customer. callerNumber, calleeNumber, startTime, endTime. Multi phrase customer names will be enclosed
  * in quotes, phone numbers must be in the format nnn-nnn-nnnn with n being an integer 0-9, dates must be in the form mm/dd/yyyy hh:mm
@@ -19,6 +20,8 @@ import java.util.regex.Pattern;
 public class Project2 {
     static PhoneBill newBill = new PhoneBill(); // Instance of a phone bill to pass the new call to.
     static PhoneCall newCall = new PhoneCall();// Instance of a newCall to record
+    static TextParser readFile = new TextParser();// Instance of a TextParser for reading phone bill files.
+    static TextDumper writeFile = new TextDumper();// Instance of a TextDumper to write to the phone bill file
 
     /**
      * Main method to manage the data interaction between the classes.
@@ -38,15 +41,18 @@ public class Project2 {
         String [] options = new String[2];/** Array to hold options */
         String [] arguments = new String [6];/** Array to hold arguments */
         String timeStamp = null; /** String to hold the concatenation of the date and time arguments */
+        String fileName = null; /** Variable to hold the text file of the phone bill data.
         String [] phoneCall = new String[arguments.length]; /** Set the array size for the phone call record to be passed to the phone bill. */
         int argIndex = 0;/** index for the argument list */
         int optionIndex = 0;/** index for the option array */
+        int optionCount = 0;/** Counter for the number of options input in the command line */
         boolean success = false; /** Used to verify the success of reading command line arguments. */
         boolean print = false; /** Print flag set when option to print is requested. */
+        boolean file = false; /** File name is present so writ to file.
 
-        /** Check to make sure sufficient arguments are in the command line */
-        if (args.length < 7){
-            System.out.println("\nMissing arguments");
+        /** Check to make sure no more or less arguments than required are in the command line */
+        if (args.length < 7 || args.length > 11){
+            System.out.println("\nInvalid arguments list");
             System.exit(1);
         }
 
@@ -54,9 +60,10 @@ public class Project2 {
         /** Iterate through the arguments, verify phone number and date/time formats where appropriate and populate the phone call array. */
         for(int i = 0; i < 2 ; ++i) {
 
-            if (args[i].equalsIgnoreCase("-print"))
-                //options[i] = args[i];
+            if (args[i].equalsIgnoreCase("-print")) {
                 print = true;
+                ++optionCount;
+            }
             else if (args[i].equalsIgnoreCase("-README")) {
                 System.out.println("\n***README***\n\nDan Conradt - Project1\n\nI have implemented three classes - Project1, PhoneBill and PhoneCall. PhonebBill and PhoneCall\nextend the AbstractPhoneBill and AbstractPhoneCall classes respectively" +
                         "This program takes\nan input of upto 2 options and requires 5 arguments describing a phone call.  It validates the\noptions and arguments for validity and formatting.  The date and time must be " +
@@ -65,9 +72,14 @@ public class Project2 {
                         "will output the README text description of the program and then exit.");
                 System.exit(1);
             }
+            else if (args[i].equalsIgnoreCase("-textFile")) {
+                file = true;
+                fileName = args[i + 1];
+                ++optionCount;
+            }
         }
-                if (print)
-                    ++argIndex;
+        argIndex = optionCount + 1;
+
         try {
                 newBill.setCustomer(args[argIndex]);
                 success = verifyPhoneNumber(args[argIndex + 1]);// verify phone format
@@ -95,6 +107,8 @@ public class Project2 {
                 newBill.addPhoneCall(newCall);
                 if (print)
                     System.out.println("\n" + newCall.toString());
+                if (file)
+                    writeFile.dumpfile(fileName,newBill);
             } catch (RuntimeException ex) {
                 System.out.print("\nInvalid Command Line Arguments.\n");
                 System.exit(1);
