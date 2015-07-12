@@ -1,6 +1,7 @@
 package edu.pdx.cs410J.dconradt;
 
 import edu.pdx.cs410J.AbstractPhoneBill;
+import edu.pdx.cs410J.ParserException;
 
 import java.io.File;
 import java.io.IOException;
@@ -78,8 +79,8 @@ public class Project2 {
                 file = true;
                 fileName = args[i + 1];
                 try {
-                    readFile.parseFile(fileName,newBill);
-                } catch (IOException e) {
+                    readFile.parse(fileName, newBill);
+                } catch (ParserException e) {
                     System.out.println("Error Reading The File.");
                 }
                 ++optionCount;
@@ -88,7 +89,12 @@ public class Project2 {
         argIndex = optionCount + 1;
 
         try {
-                newBill.setCustomer(args[argIndex]);
+                if(newBill.getCustomer() == null || args[argIndex].equals(newBill.getCustomer()))
+                    newBill.setCustomer(args[argIndex]);
+                else {
+                    System.out.println("Customer name does not match phone bill record.");
+                    System.exit(1);
+                }
                 success = verifyPhoneNumber(args[argIndex + 1]);// verify phone format
                 if (success)
                     newCall.setCallerNumber(args[argIndex + 1]);
