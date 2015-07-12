@@ -3,6 +3,8 @@ package edu.pdx.cs410J.dconradt;
 import edu.pdx.cs410J.AbstractPhoneBill;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -75,6 +77,11 @@ public class Project2 {
             else if (args[i].equalsIgnoreCase("-textFile")) {
                 file = true;
                 fileName = args[i + 1];
+                try {
+                    readFile.parseFile(fileName,newBill);
+                } catch (IOException e) {
+                    System.out.println("Error Reading The File.");
+                }
                 ++optionCount;
             }
         }
@@ -108,7 +115,7 @@ public class Project2 {
                 if (print)
                     System.out.println("\n" + newCall.toString());
                 if (file)
-                    writeFile.dumpfile(fileName,newBill);
+                    writeFile.dumpfile(fileName, newBill);
             } catch (RuntimeException ex) {
                 System.out.print("\nInvalid Command Line Arguments.\n");
                 System.exit(1);
