@@ -1,11 +1,8 @@
 package edu.pdx.cs410J.dconradt;
 
-import edu.pdx.cs410J.AbstractPhoneBill;
 import edu.pdx.cs410J.ParserException;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -18,6 +15,8 @@ import java.util.regex.Pattern;
  * in quotes, phone numbers must be in the format nnn-nnn-nnnn with n being an integer 0-9, dates must be in the form mm/dd/yyyy hh:mm
  * and will not be quoted.
  *
+ * Updated 7/12/2015:
+ * Added functionality to read and write the phone bill data to a specified file in the command line argurments.
  *
  */
 public class Project2 {
@@ -39,13 +38,13 @@ public class Project2 {
      * Parses the commmand line arguements
      * @param args  Command line arguements
      */
-    public static void processCommandLine(String [] args){
+    public static void processCommandLine(String [] args) {
 
-        String [] options = new String[2];/** Array to hold options */
-        String [] arguments = new String [6];/** Array to hold arguments */
+        String[] options = new String[2];/** Array to hold options */
+        String[] arguments = new String[6];/** Array to hold arguments */
         String timeStamp = null; /** String to hold the concatenation of the date and time arguments */
         String fileName = null; /** Variable to hold the text file of the phone bill data.
-        String [] phoneCall = new String[arguments.length]; /** Set the array size for the phone call record to be passed to the phone bill. */
+         String [] phoneCall = new String[arguments.length]; /** Set the array size for the phone call record to be passed to the phone bill. */
         int argIndex = 0;/** index for the argument list */
         int optionIndex = 0;/** index for the option array */
         int optionCount = 0;/** Counter for the number of options input in the command line */
@@ -53,38 +52,35 @@ public class Project2 {
         boolean print = false; /** Print flag set when option to print is requested. */
         boolean file = false; /** File name is present so writ to file.
 
-        /** Check to make sure no more or less arguments than required are in the command line */
-        if (args.length < 7 || args.length > 11){
+         /** Check to make sure no more or less arguments than required are in the command line */
+        if (args.length < 7 || args.length > 11) {
             System.out.println("\nInvalid arguments list");
             System.exit(1);
         }
 
 
         /** Iterate through the arguments, verify phone number and date/time formats where appropriate and populate the phone call array. */
-        for(int i = 0; i < 2 ; ++i) {
-
+        for(int i = 0; i < 3 ; ++i) {
             if (args[i].equalsIgnoreCase("-print")) {
                 print = true;
                 ++optionCount;
-            }
-            else if (args[i].equalsIgnoreCase("-README")) {
+            } else if (args[i].equalsIgnoreCase("-README")) {
                 System.out.println("\n***README***\n\nDan Conradt - Project1\n\nI have implemented three classes - Project1, PhoneBill and PhoneCall. PhonebBill and PhoneCall\nextend the AbstractPhoneBill and AbstractPhoneCall classes respectively" +
                         "This program takes\nan input of upto 2 options and requires 5 arguments describing a phone call.  It validates the\noptions and arguments for validity and formatting.  The date and time must be " +
                         "actual dates in the\nform specified as mm/dd/yyyy hh:mm.  The Phone numbers must be of the form nnn-nnn-nnnn.\nErrors in formating or validity of the phone numbers or date and time will output a message\nand the program will exit.  " +
                         "If all arguments are valid the program will create an new phone call\nrecord using an array list of phone calls in the phone bill class.  If the option -README is\nprovided then the program " +
                         "will output the README text description of the program and then exit.");
                 System.exit(1);
-            }
-            else if (args[i].equalsIgnoreCase("-textFile")) {
+            } else if (args[i].equalsIgnoreCase("-textFile")) {
                 file = true;
                 fileName = args[i + 1];
-                try {
-                    readFile.parse(fileName, newBill);
-                } catch (ParserException e) {
-                    System.out.println("Error Reading The File.");
-                }
                 ++optionCount;
             }
+        }
+        try {
+             readFile.parse(fileName, newBill);
+        } catch (ParserException e) {
+            System.out.println("Error Parsing The File.");
         }
         argIndex = optionCount + 1;
 
@@ -121,8 +117,12 @@ public class Project2 {
                 if (print)
                     System.out.println("\n" + newCall.toString());
                 if (file)
-                    writeFile.dumpfile(fileName, newBill);
-            } catch (RuntimeException ex) {
+                    try {
+                        writeFile.dump(fileName, newBill);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+        } catch (RuntimeException ex) {
                 System.out.print("\nInvalid Command Line Arguments.\n");
                 System.exit(1);
             }

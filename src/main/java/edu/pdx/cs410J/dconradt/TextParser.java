@@ -20,13 +20,14 @@ public class TextParser implements PhoneBillParser {
     }
 
     public void parse(String fileName, PhoneBill newBill)throws ParserException {
-        PhoneCall oldCall = new PhoneCall();
+        //PhoneCall oldCall = new PhoneCall();
         File billData = new File(fileName);
         if(billData.exists()) {
             try {
                 BufferedReader getBillData = new BufferedReader(new FileReader(billData));
                 String phoneBillRecord = getBillData.readLine();
-                while(phoneBillRecord != null){
+                while(phoneBillRecord != null && phoneBillRecord.length()>0){
+                    PhoneCall oldCall = new PhoneCall();
                     String [] record = phoneBillRecord.split("\t");
                     int i = 0;
                     newBill.setCustomer(record[i]);
