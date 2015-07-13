@@ -50,14 +50,13 @@ public class Project2 {
         int optionCount = 0;/** Counter for the number of options input in the command line */
         boolean success = false; /** Used to verify the success of reading command line arguments. */
         boolean print = false; /** Print flag set when option to print is requested. */
-        boolean file = false; /** File name is present so writ to file.
+        boolean file = false; /** File name is present so writ to file.*/
 
-         /** Check to make sure no more or less arguments than required are in the command line */
-        if (args.length < 7 || args.length > 11) {
-            System.out.println("\nInvalid arguments list");
+        /** If not Argurments exit program */
+        if(args.length == 0) {
+            System.out.println("\nThere are no command line argurments.");
             System.exit(1);
         }
-
 
         /** Iterate through the arguments, verify phone number and date/time formats where appropriate and populate the phone call array. */
         for(int i = 0; i < 3 ; ++i) {
@@ -75,8 +74,18 @@ public class Project2 {
                 file = true;
                 fileName = args[i + 1];
                 ++optionCount;
+            }else if(args[i].startsWith("-")){
+                System.out.println("Argument: " + args[i] + " is not a valid option argument.");
+                System.exit(1);
             }
         }
+
+        /** Check to make sure no more or less arguments than required are in the command line */
+        if (args.length < 7 || args.length > 11) {
+            System.out.println("\nThere are too few or too many arguments");
+            System.exit(1);
+        }
+
         try {
              readFile.parse(fileName, newBill);
         } catch (ParserException e) {
@@ -88,31 +97,36 @@ public class Project2 {
                 if(newBill.getCustomer() == null || args[argIndex].equals(newBill.getCustomer()))
                     newBill.setCustomer(args[argIndex]);
                 else {
-                    System.out.println("Customer name does not match phone bill record.");
+                    System.out.println("The provided customer name does not match phone bill record file.");
                     System.exit(1);
                 }
                 success = verifyPhoneNumber(args[argIndex + 1]);// verify phone format
                 if (success)
                     newCall.setCallerNumber(args[argIndex + 1]);
                 else
-                    exitProgram("\nInvalid Command Line Arguments.\nA phone number is invalid or not of the form nnn-nnn-nnnn.");
+                    exitProgram("\nInvalid or missing phone number arguments.\nA phone number must be of the form nnn-nnn-nnnn.");
                 success = verifyPhoneNumber(args[argIndex + 2]); // verify phone format
                 if (success)
                     newCall.setCalleeNumber(args[argIndex + 2]);
                 else
-                    exitProgram("\nInvalid Command Line Arguments.\nA phone number is invalid or not of the form nnn-nnn-nnnn.");
+                    exitProgram("\nInvalid or missing phone number argument.\nA phone number must be of the form nnn-nnn-nnnn.");
                 timeStamp = args[argIndex + 3] + " " + args[argIndex + 4];
                 success = verifyDateFormat(timeStamp); // verify data and time format
                 if (success)
                     newCall.setStartTime(timeStamp);
                 else
-                    exitProgram("\nInvalid Command Line Arguments.\nA date and time must be of the format dd/mm/yyy/ hh:mm");
+                    exitProgram("\nInvalid or missing Start Time argument.\nA date and time must be of the format dd/mm/yyy/ hh:mm");
                 timeStamp = args[argIndex + 5] + " " + args[argIndex + 6];
                 success = verifyDateFormat(timeStamp);// verify data and time format
                 if (success)
                     newCall.setEndTime(timeStamp);
                 else
-                    exitProgram("\nInvalid Command Line Arguments.\nA date and time must be of the format dd/mm/yyy/ hh:mm");
+                    exitProgram("\nInvalid or missing End Time Argument.\nA date and time must be of the format dd/mm/yyy/ hh:mm");
+                if(args.length > argIndex + 7){
+                    System.out.println("There are too many arguments listed the phone call information.");
+                    System.exit(1);
+
+                }
                 newBill.addPhoneCall(newCall);
                 if (print)
                     System.out.println("\n" + newCall.toString());
