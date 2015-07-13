@@ -30,7 +30,7 @@ public class Project2Test extends InvokeMainTestCase {
    //     assertTrue(result.getErr().contains( "Missing command line arguments" ));
    // }
 
-    /*
+    /**
      * Tests the verify date format function.
      */
     @Test
@@ -39,8 +39,8 @@ public class Project2Test extends InvokeMainTestCase {
         assertTrue(newProject.verifyDateFormat("11/21/2015 12:21"));
     }
 
-    /*
-    * Tests the phone number format
+    /**
+     * Tests the phone number format
      */
     @Test
     public void testValidPhoneNumber(){

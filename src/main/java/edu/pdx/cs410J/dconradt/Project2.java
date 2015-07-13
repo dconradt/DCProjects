@@ -35,8 +35,8 @@ public class Project2 {
   }
 
     /**
-     * Parses the commmand line arguements
-     * @param args  Command line arguements
+     * Parses the commmand line arguments
+     * @param args  Command line arguments
      */
     public static void processCommandLine(String [] args) {
 

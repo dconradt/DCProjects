@@ -10,6 +10,7 @@ import java.util.regex.Pattern;
 
 /**
  * @author  Dan Conradt 7/8/2015.
+ * TextParser parses data from a text file. It does validation on the phone numbers and start and stop times
  */
 public class TextParser implements PhoneBillParser {
     @Override
@@ -20,7 +21,6 @@ public class TextParser implements PhoneBillParser {
     }
 
     public void parse(String fileName, PhoneBill newBill)throws ParserException {
-        //PhoneCall oldCall = new PhoneCall();
         File billData = new File(fileName);
         if(billData.exists()) {
             try {
@@ -34,19 +34,19 @@ public class TextParser implements PhoneBillParser {
                     if(verifyPhoneNumber(record[i+1]))
                         oldCall.setCallerNumber(record[i + 1]);
                     else
-                        exitProgram("Invalid phone number found while parsing file.");
+                        exitProgram("Invalid caller phone number found while parsing file.");
                     if(verifyPhoneNumber(record[i + 2]))
                         oldCall.setCalleeNumber(record[i + 2]);
                     else
-                        exitProgram("Invalid phone number found while parsing file.");
+                        exitProgram("Invalid callee phone number found while parsing file.");
                     if(verifyDateFormat(record[i + 3]))
                         oldCall.setStartTime(record[i + 3]);
                     else
-                        exitProgram("Invalid date\time found while parsing file.");
+                        exitProgram("Invalid start date\time found while parsing file.");
                     if(verifyDateFormat(record[i+4]))
                         oldCall.setEndTime(record[i+4]);
                     else
-                        exitProgram("Invalid date\time found while parsing file.");
+                        exitProgram("Invalid stop date\time found while parsing file.");
                     newBill.addPhoneCall(oldCall);
                     phoneBillRecord = getBillData.readLine();
                 }
