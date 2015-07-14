@@ -64,11 +64,13 @@ public class Project2 {
                 print = true;
                 ++optionCount;
             } else if (args[i].equalsIgnoreCase("-README")) {
-                System.out.println("\n***README***\n\nDan Conradt - Project1\n\nI have implemented three classes - Project1, PhoneBill and PhoneCall. PhonebBill and PhoneCall\nextend the AbstractPhoneBill and AbstractPhoneCall classes respectively" +
-                        "This program takes\nan input of upto 2 options and requires 5 arguments describing a phone call.  It validates the\noptions and arguments for validity and formatting.  The date and time must be " +
-                        "actual dates in the\nform specified as mm/dd/yyyy hh:mm.  The Phone numbers must be of the form nnn-nnn-nnnn.\nErrors in formating or validity of the phone numbers or date and time will output a message\nand the program will exit.  " +
-                        "If all arguments are valid the program will create an new phone call\nrecord using an array list of phone calls in the phone bill class.  If the option -README is\nprovided then the program " +
-                        "will output the README text description of the program and then exit.");
+                System.out.println("\n***README***\n\nDan Conradt - Project2\n\nI have implemented two more classes to project1 and modified project1 to be project2 - Project2, TextDumper implements PhoneBillDumper and\n" +
+                        "TestParser implements PhoneBillParser. This program takes an input of upto 3 options and requires 5 arguments describing a phone call.\nThe addtional classes will parse and write to a phone bill file." +
+                        "  The TextParser will parse the file into a phone bill collection at\nthe start of the programe and validate the text file data to ensure the file is of the correct format.  It validates the options and\narguments " +
+                        "for validity and formatting.  The date and time must be actual dates in the form specified as mm/dd/yyyy hh:mm.  The Phone\nnumbers must be of the form nnn-nnn-nnnn. Errors in formating or validity of the phone " +
+                        "numbers or date and time will output a message\nand the program will exit.  If all arguments are valid the program will create a new phone call record using and add it to the array list\nof phone calls in the " +
+                        "phone bill class.  If the option -README is provided then the program will output the README text description of the\nprogram and then exit. If no file exists then a new one will be created and written too, by the " +
+                        "TextDumper class.");
                 System.exit(1);
             } else if (args[i].equalsIgnoreCase("-textFile")) {
                 file = true;
