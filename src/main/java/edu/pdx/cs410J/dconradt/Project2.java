@@ -53,8 +53,8 @@ public class Project2 {
         boolean file = false; /** File name is present so writ to file.*/
 
         /** If not Argurments exit program */
-        if(args.length == 0) {
-            System.out.println("\nThere are no command line argurments.");
+        if(args.length == 0 || args.length < 7) {
+            System.out.println("\nThere are too few command line argurments.");
             System.exit(1);
         }
 
@@ -85,6 +85,10 @@ public class Project2 {
         /** Check to make sure no more or less arguments than required are in the command line */
         if (args.length < 7 || args.length > 11) {
             System.out.println("\nThere are too few or too many arguments");
+            System.exit(1);
+        }
+        else if(!file){
+            System.out.println("\nThe text file is missing in the command line arguments.");
             System.exit(1);
         }
 
