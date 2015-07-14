@@ -43,10 +43,10 @@ public class Project2 {
         String[] options = new String[2];/** Array to hold options */
         String[] arguments = new String[6];/** Array to hold arguments */
         String timeStamp = null; /** String to hold the concatenation of the date and time arguments */
-        String fileName = null; /** Variable to hold the text file of the phone bill data.
-         String [] phoneCall = new String[arguments.length]; /** Set the array size for the phone call record to be passed to the phone bill. */
+        String fileName = null; /** Variable to hold the text file of the phone bill data.*/
+        //String [] phoneCall = new String[arguments.length]; /** Set the array size for the phone call record to be passed to the phone bill. */
         int argIndex = 0;/** index for the argument list */
-        int optionIndex = 0;/** index for the option array */
+        //int optionIndex = 0;/** index for the option array */
         int optionCount = 0;/** Counter for the number of options input in the command line */
         boolean success = false; /** Used to verify the success of reading command line arguments. */
         boolean print = false; /** Print flag set when option to print is requested. */
@@ -87,17 +87,21 @@ public class Project2 {
             System.out.println("\nThere are too few or too many arguments");
             System.exit(1);
         }
-        else if(!file){
-            System.out.println("\nThe text file is missing in the command line arguments.");
-            System.exit(1);
-        }
+       // else if(!file){
+           // System.out.println("\nThe text file is missing in the command line arguments.");
+           // System.exit(1);
+       // }
+        if(file) {
+            try {
+                readFile.parse(fileName, newBill);
+            } catch (ParserException e) {
+                System.out.println("Error Parsing The File.");
+            }
 
-        try {
-             readFile.parse(fileName, newBill);
-        } catch (ParserException e) {
-            System.out.println("Error Parsing The File.");
+            argIndex = optionCount + 1;
         }
-        argIndex = optionCount + 1;
+        else
+            argIndex = optionCount;
 
         try {
                 if(newBill.getCustomer() == null || args[argIndex].equals(newBill.getCustomer()))
