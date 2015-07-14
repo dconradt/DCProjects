@@ -20,6 +20,7 @@ public class TextParser implements PhoneBillParser {
         return null;
     }
 
+    /** Parse the given file into an array list of phone calls. */
     public void parse(String fileName, PhoneBill newBill)throws ParserException {
         File billData = new File(fileName);
         if(billData.exists()) {

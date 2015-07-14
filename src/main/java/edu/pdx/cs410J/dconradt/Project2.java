@@ -59,7 +59,7 @@ public class Project2 {
         }
 
         /** Iterate through the arguments, verify phone number and date/time formats where appropriate and populate the phone call array. */
-        for(int i = 0; i < 3 ; ++i) {
+        for(int i = 0; i < 4 ; ++i) {
             if (args[i].equalsIgnoreCase("-print")) {
                 print = true;
                 ++optionCount;
@@ -87,10 +87,8 @@ public class Project2 {
             System.out.println("\nThere are too few or too many arguments");
             System.exit(1);
         }
-       // else if(!file){
-           // System.out.println("\nThe text file is missing in the command line arguments.");
-           // System.exit(1);
-       // }
+
+        /** If a file is given read and parse the file*/
         if(file) {
             try {
                 readFile.parse(fileName, newBill);

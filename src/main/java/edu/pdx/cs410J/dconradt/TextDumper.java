@@ -42,8 +42,6 @@ public class TextDumper implements PhoneBillDumper {
             System.out.println("The file cannot be written too.");
             System.exit(1);
         }
-
-
     }
 
     /**
