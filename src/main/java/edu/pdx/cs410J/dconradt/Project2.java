@@ -46,20 +46,21 @@ public class Project2 {
         String fileName = null; /** Variable to hold the text file of the phone bill data.*/
         //String [] phoneCall = new String[arguments.length]; /** Set the array size for the phone call record to be passed to the phone bill. */
         int argIndex = 0;/** index for the argument list */
-        //int optionIndex = 0;/** index for the option array */
+        int argLength = 0;/** holds the length of the argument list */
         int optionCount = 0;/** Counter for the number of options input in the command line */
         boolean success = false; /** Used to verify the success of reading command line arguments. */
         boolean print = false; /** Print flag set when option to print is requested. */
         boolean file = false; /** File name is present so writ to file.*/
 
         /** If not Argurments exit program */
-        if(args.length == 0 || args.length < 7) {
+        if(args.length == 0) {
             System.out.println("\nThere are too few command line argurments.");
             System.exit(1);
         }
 
         /** Iterate through the arguments, verify phone number and date/time formats where appropriate and populate the phone call array. */
-        for(int i = 0; i < 4 ; ++i) {
+
+        for (int i = 0; i < args.length; ++i) {
             if (args[i].equalsIgnoreCase("-print")) {
                 print = true;
                 ++optionCount;
@@ -76,7 +77,7 @@ public class Project2 {
                 file = true;
                 fileName = args[i + 1];
                 ++optionCount;
-            }else if(args[i].startsWith("-")){
+            } else if (args[i].startsWith("-")) {
                 System.out.println("Argument: " + args[i] + " is not a valid option argument.");
                 System.exit(1);
             }
@@ -131,7 +132,7 @@ public class Project2 {
                 else
                     exitProgram("\nInvalid or missing End Time Argument.\nA date and time must be of the format dd/mm/yyy/ hh:mm");
                 if(args.length > argIndex + 7){
-                    System.out.println("There are too many arguments listed the phone call information.");
+                    System.out.println("There are too many arguments listed in the phone call information.");
                     System.exit(1);
 
                 }
