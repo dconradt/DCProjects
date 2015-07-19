@@ -5,6 +5,9 @@ import edu.pdx.cs410J.ParserException;
 import edu.pdx.cs410J.PhoneBillParser;
 
 import java.io.*;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -22,6 +25,8 @@ public class TextParser implements PhoneBillParser {
 
     /** Parse the given file into an array list of phone calls. */
     public void parse(String fileName, PhoneBill newBill)throws ParserException {
+        SimpleDateFormat dateFormatter = new SimpleDateFormat( "MM/dd/yyyy hh:mm a");
+        String timeStamp = null;
         File billData = new File(fileName);
         if(billData.exists()) {
             try {
@@ -40,14 +45,32 @@ public class TextParser implements PhoneBillParser {
                         oldCall.setCalleeNumber(record[i + 2]);
                     else
                         exitProgram("Invalid callee phone number found while parsing file.");
-                    if(verifyDateFormat(record[i + 3]))
-                        oldCall.setStartTime(record[i + 3]);
+
+
+                    Date callDateTime = null;
+                    try {
+                        callDateTime = dateFormatter.parse(record[i + 3]);
+                    } catch (ParseException e) {
+                        System.out.println("Error in Call Date/Time");
+                    }
+                    timeStamp = dateFormatter.format(callDateTime);
+                    if(verifyDateFormat(timeStamp)){
+                        System.out.println(timeStamp);
+                        oldCall.setStartTime(callDateTime);
+                    }
                     else
-                        exitProgram("Invalid start date\time found while parsing file.");
-                    if(verifyDateFormat(record[i+4]))
-                        oldCall.setEndTime(record[i+4]);
+                        exitProgram("Invalid start date/time found while parsing file.");
+                    try {
+                        callDateTime = dateFormatter.parse(record[i + 4]);
+                    } catch (ParseException e) {
+                        System.out.println("Error in Call Date/Time");
+                    }
+                    timeStamp = dateFormatter.format(callDateTime);
+                    if(verifyDateFormat(timeStamp)) {
+                        oldCall.setEndTime(callDateTime);
+                    }
                     else
-                        exitProgram("Invalid stop date\time found while parsing file.");
+                        exitProgram("Invalid stop date/time found while parsing file.");
                     newBill.addPhoneCall(oldCall);
                     phoneBillRecord = getBillData.readLine();
                 }
@@ -67,7 +90,7 @@ public class TextParser implements PhoneBillParser {
      */
     public static boolean verifyDateFormat(String date) {
         String dateToCheck = date;
-        Pattern datePattern = Pattern.compile("(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/(\\d\\d\\d\\d) ([01]?[0-9]|2[0-3]):[0-5][0-9]");
+        Pattern datePattern = Pattern.compile("(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/(\\d\\d\\d\\d) (1[012]|0?[1-9]):[0-5][0-9](\\s)?(?i)(AM|am|PM|pm)");
         Matcher dateCorrect = datePattern.matcher(dateToCheck);
         return dateCorrect.matches();
     }

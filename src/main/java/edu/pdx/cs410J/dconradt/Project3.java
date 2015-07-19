@@ -3,6 +3,11 @@ package edu.pdx.cs410J.dconradt;
 import edu.pdx.cs410J.ParserException;
 
 import java.io.IOException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -19,7 +24,7 @@ import java.util.regex.Pattern;
  * Added functionality to read and write the phone bill data to a specified file in the command line argurments.
  *
  */
-public class Project2 {
+public class Project3 {
     static PhoneBill newBill = new PhoneBill(); // Instance of a phone bill to pass the new call to.
     static PhoneCall newCall = new PhoneCall();// Instance of a newCall to record
     static TextParser readFile = new TextParser();// Instance of a TextParser for reading phone bill files.
@@ -51,6 +56,7 @@ public class Project2 {
         boolean success = false; /** Used to verify the success of reading command line arguments. */
         boolean print = false; /** Print flag set when option to print is requested. */
         boolean file = false; /** File name is present so writ to file.*/
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
 
         /** If not Argurments exit program */
         if(args.length == 0) {
@@ -65,7 +71,7 @@ public class Project2 {
                 print = true;
                 ++optionCount;
             } else if (args[i].equalsIgnoreCase("-README")) {
-                System.out.println("\n***README***\n\nDan Conradt - Project2\n\nI have implemented two more classes to project1 and modified project1 to be project2 - Project2, TextDumper implements PhoneBillDumper and\n" +
+                System.out.println("\n***README***\n\nDan Conradt - Project3\n\nI have implemented two more classes to project1 and modified project1 to be project2 - Project3, TextDumper implements PhoneBillDumper and\n" +
                         "TestParser implements PhoneBillParser. This program takes an input of upto 3 options and requires 5 arguments describing a phone call.\nThe addtional classes will parse and write to a phone bill file." +
                         "  The TextParser will parse the file into a phone bill collection at\nthe start of the programe and validate the text file data to ensure the file is of the correct format.  It validates the options and\narguments " +
                         "for validity and formatting.  The date and time must be actual dates in the form specified as mm/dd/yyyy hh:mm.  The Phone\nnumbers must be of the form nnn-nnn-nnnn. Errors in formating or validity of the phone " +
@@ -84,7 +90,7 @@ public class Project2 {
         }
 
         /** Check to make sure no more or less arguments than required are in the command line */
-        if (args.length < 7 || args.length > 11) {
+        if (args.length < 9 || args.length > 13) {
             System.out.println("\nThere are too few or too many arguments");
             System.exit(1);
         }
@@ -103,48 +109,63 @@ public class Project2 {
             argIndex = optionCount;
 
         try {
-                if(newBill.getCustomer() == null || args[argIndex].equals(newBill.getCustomer()))
-                    newBill.setCustomer(args[argIndex]);
-                else {
-                    System.out.println("The provided customer name does not match phone bill record file.");
-                    System.exit(1);
-                }
-                success = verifyPhoneNumber(args[argIndex + 1]);// verify phone format
-                if (success)
-                    newCall.setCallerNumber(args[argIndex + 1]);
-                else
-                    exitProgram("\nInvalid or missing phone number arguments.\nA phone number must be of the form nnn-nnn-nnnn.");
-                success = verifyPhoneNumber(args[argIndex + 2]); // verify phone format
-                if (success)
-                    newCall.setCalleeNumber(args[argIndex + 2]);
-                else
-                    exitProgram("\nInvalid or missing phone number argument.\nA phone number must be of the form nnn-nnn-nnnn.");
-                timeStamp = args[argIndex + 3] + " " + args[argIndex + 4];
-                success = verifyDateFormat(timeStamp); // verify data and time format
-                if (success)
-                    newCall.setStartTime(timeStamp);
-                else
-                    exitProgram("\nInvalid or missing Start Time argument.\nA date and time must be of the format dd/mm/yyy/ hh:mm");
-                timeStamp = args[argIndex + 5] + " " + args[argIndex + 6];
-                success = verifyDateFormat(timeStamp);// verify data and time format
-                if (success)
-                    newCall.setEndTime(timeStamp);
-                else
-                    exitProgram("\nInvalid or missing End Time Argument.\nA date and time must be of the format dd/mm/yyy/ hh:mm");
-                if(args.length > argIndex + 7){
-                    System.out.println("There are too many arguments listed in the phone call information.");
-                    System.exit(1);
+            if (newBill.getCustomer() == null || args[argIndex].equals(newBill.getCustomer()))
+                newBill.setCustomer(args[argIndex]);
+            else {
+                System.out.println("The provided customer name does not match phone bill record file.");
+                System.exit(1);
+            }
+            success = verifyPhoneNumber(args[argIndex + 1]);// verify phone format
+            if (success)
+                newCall.setCallerNumber(args[argIndex + 1]);
+            else
+                exitProgram("\nInvalid or missing phone number arguments.\nA phone number must be of the form nnn-nnn-nnnn.");
+            success = verifyPhoneNumber(args[argIndex + 2]); // verify phone format
+            if (success)
+                newCall.setCalleeNumber(args[argIndex + 2]);
+            else
+                exitProgram("\nInvalid or missing phone number argument.\nA phone number must be of the form nnn-nnn-nnnn.");
 
+            timeStamp = args[argIndex + 3] + " " + args[argIndex + 4] + " " + args[argIndex + 5];
+            success = verifyDateFormat(timeStamp); // verify data and time format
+            if (success) {
+                Date callDateTime = null;
+                try {
+                    callDateTime = dateFormatter.parse(timeStamp);
+                } catch (ParseException e) {
+                    System.out.println("Error in Call Date/Time");
                 }
-                newBill.addPhoneCall(newCall);
-                if (print)
-                    System.out.println("\n" + newCall.toString());
-                if (file)
-                    try {
-                        writeFile.dump(fileName, newBill);
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                newCall.setStartTime(callDateTime);
+            }
+            else
+                exitProgram("\nInvalid or missing Start Time argument.\nA date and time must be of the format dd/mm/yyy/ hh:mm am");
+            timeStamp = args[argIndex + 6] + " " + args[argIndex + 7] + " " + args[argIndex + 8];
+            success = verifyDateFormat(timeStamp);// verify data and time format
+            if (success) {
+                Date callDateTime = null;
+                try {
+                    callDateTime = dateFormatter.parse(timeStamp);
+                } catch (ParseException e) {
+                    System.out.println("Error in Call Date/Time");
+                }
+                newCall.setEndTime(callDateTime);
+            }
+            else
+                exitProgram("\nInvalid or missing End Time Argument.\nA date and time must be of the format dd/mm/yyy/ hh:mm am");
+            if (args.length > argIndex + 9) {
+                System.out.println("There are too many arguments listed in the phone call information.");
+                System.exit(1);
+
+            }
+            newBill.addPhoneCall(newCall);
+            if (print)
+                System.out.println("\n" + newCall.toString());
+            if (file)
+                try {
+                    writeFile.dump(fileName, newBill);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
         } catch (RuntimeException ex) {
                 System.out.print("\nInvalid Command Line Arguments.\n");
                 System.exit(1);
@@ -159,7 +180,7 @@ public class Project2 {
      */
     public static boolean verifyDateFormat(String date) {
         String dateToCheck = date;
-        Pattern datePattern = Pattern.compile("(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/(\\d\\d\\d\\d) ([01]?[0-9]|2[0-3]):[0-5][0-9]");
+        Pattern datePattern = Pattern.compile("(0?[1-9]|1[012])/(0?[1-9]|[12][0-9]|3[01])/(\\d\\d\\d\\d) (1[012]|[1-9]):[0-5][0-9](\\s)?(?i)(am|pm)");
         Matcher dateCorrect = datePattern.matcher(dateToCheck);
         return dateCorrect.matches();
     }

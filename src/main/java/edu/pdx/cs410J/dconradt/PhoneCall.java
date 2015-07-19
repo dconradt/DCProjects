@@ -1,6 +1,8 @@
 package edu.pdx.cs410J.dconradt;
 
 import edu.pdx.cs410J.AbstractPhoneCall;
+
+import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
@@ -10,10 +12,12 @@ import java.util.Date;
 public class PhoneCall extends AbstractPhoneCall {
 
 
-    private String endTime;// End time of a call
+    private Date endTime;// End time of a call
+    private String time; // String representation of time value.
     private String callerNumber;// Number of the caller
     private String calleeNumber;// Number of the callee
-    private String startTime;// Start time of the call
+    private Date startTime;// Start time of the call
+    SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
 
     /**Get the callee phone number
      *
@@ -40,6 +44,7 @@ public class PhoneCall extends AbstractPhoneCall {
      */
     @Override
     public Date getEndTime() {
+
         return super.getEndTime();
     }
 
@@ -49,6 +54,7 @@ public class PhoneCall extends AbstractPhoneCall {
      */
     @Override
     public Date getStartTime() {
+
         return super.getStartTime();
     }
 
@@ -58,7 +64,8 @@ public class PhoneCall extends AbstractPhoneCall {
      */
     @Override
     public String getEndTimeString() {
-        return endTime;
+        time = dateFormatter.format(endTime);
+        return time;
     }
 
     /**Get the start time of the current call
@@ -67,7 +74,8 @@ public class PhoneCall extends AbstractPhoneCall {
      */
     @Override
     public String getStartTimeString() {
-        return startTime;
+        time = dateFormatter.format(startTime);
+        return time;
     }
 
 
@@ -93,7 +101,7 @@ public class PhoneCall extends AbstractPhoneCall {
      *
      * @param startTime     Sets the start time of the call
      */
-    public void setStartTime(String startTime) {
+    public void setStartTime(Date startTime) {
 
         this.startTime = startTime;
     }
@@ -102,7 +110,7 @@ public class PhoneCall extends AbstractPhoneCall {
      *
      * @param endTime Sets the end time of the call
      */
-    public void setEndTime(String endTime) {
+    public void setEndTime(Date endTime) {
 
         this.endTime = endTime;
     }
