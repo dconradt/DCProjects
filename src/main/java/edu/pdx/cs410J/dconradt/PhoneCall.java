@@ -9,7 +9,7 @@ import java.util.Date;
  * @author Dan Conradt on 6/28/2015.
  * The PhoneCall class manages the attributes of a phone call.
  */
-public class PhoneCall extends AbstractPhoneCall {
+public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall> {
 
 
     private Date endTime;// End time of a call
@@ -18,6 +18,9 @@ public class PhoneCall extends AbstractPhoneCall {
     private String calleeNumber;// Number of the callee
     private Date startTime;// Start time of the call
     SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+
+
+
 
     /**Get the callee phone number
      *
@@ -45,7 +48,7 @@ public class PhoneCall extends AbstractPhoneCall {
     @Override
     public Date getEndTime() {
 
-        return super.getEndTime();
+        return endTime;
     }
 
     /**Get the start time of the call
@@ -55,7 +58,7 @@ public class PhoneCall extends AbstractPhoneCall {
     @Override
     public Date getStartTime() {
 
-        return super.getStartTime();
+        return startTime;
     }
 
     /**Get the end time of the current call
@@ -113,5 +116,16 @@ public class PhoneCall extends AbstractPhoneCall {
     public void setEndTime(Date endTime) {
 
         this.endTime = endTime;
+    }
+
+
+    @Override
+    public int compareTo(PhoneCall call) {
+        if(startTime.after(call.getStartTime()))
+            return 1;
+        else if(startTime.before(call.getStartTime()))
+            return -1;
+        else
+            return 0;
     }
 }

@@ -27,6 +27,7 @@ public class PhoneBill extends AbstractPhoneBill {
     public void addPhoneCall(AbstractPhoneCall abstractPhoneCall) {
 
         phoneCalls.add(abstractPhoneCall);
+
     }
 
     /** Get the phone call list
@@ -35,7 +36,7 @@ public class PhoneBill extends AbstractPhoneBill {
      */
     @Override
     public Collection getPhoneCalls() {
-
+        Collections.sort(phoneCalls);
         return phoneCalls;
     }
 

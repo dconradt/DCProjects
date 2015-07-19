@@ -55,7 +55,6 @@ public class TextParser implements PhoneBillParser {
                     }
                     timeStamp = dateFormatter.format(callDateTime);
                     if(verifyDateFormat(timeStamp)){
-                        System.out.println(timeStamp);
                         oldCall.setStartTime(callDateTime);
                     }
                     else
