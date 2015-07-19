@@ -29,6 +29,7 @@ public class Project3 {
     static PhoneCall newCall = new PhoneCall();// Instance of a newCall to record
     static TextParser readFile = new TextParser();// Instance of a TextParser for reading phone bill files.
     static TextDumper writeFile = new TextDumper();// Instance of a TextDumper to write to the phone bill file
+    static PrettyPrinter writePretty = new PrettyPrinter(); // Instance of a Pretty Printer object.
 
     /**
      * Main method to manage the data interaction between the classes.
@@ -49,6 +50,7 @@ public class Project3 {
         String[] arguments = new String[6];/** Array to hold arguments */
         String timeStamp = null; /** String to hold the concatenation of the date and time arguments */
         String fileName = null; /** Variable to hold the text file of the phone bill data.*/
+        String prettyFile = null; /** Variable to hold the text file of the pretty file format
         //String [] phoneCall = new String[arguments.length]; /** Set the array size for the phone call record to be passed to the phone bill. */
         int argIndex = 0;/** index for the argument list */
         int argLength = 0;/** holds the length of the argument list */
@@ -56,6 +58,8 @@ public class Project3 {
         boolean success = false; /** Used to verify the success of reading command line arguments. */
         boolean print = false; /** Print flag set when option to print is requested. */
         boolean file = false; /** File name is present so writ to file.*/
+        boolean pretty = false;/** Determines if pretty file was requested.*/
+
         SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
 
         /** If not Argurments exit program */
@@ -70,7 +74,12 @@ public class Project3 {
             if (args[i].equalsIgnoreCase("-print")) {
                 print = true;
                 ++optionCount;
-            } else if (args[i].equalsIgnoreCase("-README")) {
+            }else if((args[i].equalsIgnoreCase("-pretty"))){
+                pretty = true;
+                prettyFile = args[i + 1];
+                optionCount = optionCount + 2;
+                ++i;
+            }else if (args[i].equalsIgnoreCase("-README")) {
                 System.out.println("\n***README***\n\nDan Conradt - Project3\n\nI have implemented two more classes to project1 and modified project1 to be project2 - Project3, TextDumper implements PhoneBillDumper and\n" +
                         "TestParser implements PhoneBillParser. This program takes an input of upto 3 options and requires 5 arguments describing a phone call.\nThe addtional classes will parse and write to a phone bill file." +
                         "  The TextParser will parse the file into a phone bill collection at\nthe start of the programe and validate the text file data to ensure the file is of the correct format.  It validates the options and\narguments " +
@@ -82,7 +91,8 @@ public class Project3 {
             } else if (args[i].equalsIgnoreCase("-textFile")) {
                 file = true;
                 fileName = args[i + 1];
-                ++optionCount;
+                optionCount = optionCount + 2;
+                ++i;
             } else if (args[i].startsWith("-")) {
                 System.out.println("Argument: " + args[i] + " is not a valid option argument.");
                 System.exit(1);
@@ -90,7 +100,7 @@ public class Project3 {
         }
 
         /** Check to make sure no more or less arguments than required are in the command line */
-        if (args.length < 9 || args.length > 13) {
+        if (args.length < 10 || args.length > 15) {
             System.out.println("\nThere are too few or too many arguments");
             System.exit(1);
         }
@@ -103,10 +113,10 @@ public class Project3 {
                 System.out.println("Error Parsing The File.");
             }
 
-            argIndex = optionCount + 1;
-        }
-        else
             argIndex = optionCount;
+        }
+       // else
+         //   argIndex = optionCount;
 
         try {
             if (newBill.getCustomer() == null || args[argIndex].equals(newBill.getCustomer()))
@@ -134,6 +144,7 @@ public class Project3 {
                     callDateTime = dateFormatter.parse(timeStamp);
                 } catch (ParseException e) {
                     System.out.println("Error in Call Date/Time");
+                    System.exit(1);
                 }
                 newCall.setStartTime(callDateTime);
             }
@@ -147,6 +158,7 @@ public class Project3 {
                     callDateTime = dateFormatter.parse(timeStamp);
                 } catch (ParseException e) {
                     System.out.println("Error in Call Date/Time");
+                    System.exit(1);
                 }
                 newCall.setEndTime(callDateTime);
             }
@@ -164,7 +176,15 @@ public class Project3 {
                 try {
                     writeFile.dump(fileName, newBill);
                 } catch (IOException e) {
-                    e.printStackTrace();
+                    System.out.println("File Error has occured, cannot write output file.");
+                    System.exit(1);
+                }
+            if (pretty)
+                try {
+                    writePretty.prettyDump(prettyFile, newBill);
+                } catch (IOException e) {
+                    System.out.println("File Error has occured, cannot write output pretty file.");
+                    System.exit(1);
                 }
         } catch (RuntimeException ex) {
                 System.out.print("\nInvalid Command Line Arguments.\n");
