@@ -32,11 +32,11 @@ public class Project3Test extends InvokeMainTestCase {
     /**
      * Tests the verify date format function.
      */
-    @Test
-    public void testValidDateTimeFormat(){
-        Project3 newProject = new Project3();
-        assertTrue(newProject.verifyDateFormat("11/21/2015 12:21"));
-    }
+    //@Test
+   // public void testValidDateTimeFormat(){
+     //   Project3 newProject = new Project3();
+       // assertTrue(newProject.verifyDateFormat("11/21/2015 12:21"));
+   // }
 
     /**
      * Tests the phone number format
