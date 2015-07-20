@@ -13,7 +13,8 @@ import java.util.regex.Pattern;
 
 /**
  * @author  Dan Conradt 7/8/2015.
- * TextParser parses data from a text file. It does validation on the phone numbers and start and stop times
+ * TextParser parses data from a text file. It does data validation on the phone numbers, start and stop times,
+ * and a malformatted data file.
  */
 public class TextParser implements PhoneBillParser {
     @Override
@@ -35,6 +36,10 @@ public class TextParser implements PhoneBillParser {
                 while(phoneBillRecord != null && phoneBillRecord.length()>0){
                     PhoneCall oldCall = new PhoneCall();
                     String [] record = phoneBillRecord.split("\t");
+                    if(record.length < 5){
+                        System.out.println("The data file is malformatted.");
+                        System.exit(1);
+                    }
                     int i = 0;
                     newBill.setCustomer(record[i]);
                     if(verifyPhoneNumber(record[i+1]))

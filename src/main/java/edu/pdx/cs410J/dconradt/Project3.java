@@ -23,6 +23,10 @@ import java.util.regex.Pattern;
  * Updated 7/12/2015:
  * Added functionality to read and write the phone bill data to a specified file in the command line argurments.
  *
+ * Updated 7/20/2015
+ * Added functionality, use the java.util.date to compute the length of a call and format the call start and end times in SHORT format. Added a PrettyPrinter class
+ * to output a user friendly formatted phone bill to either a specified file or to the console.
+ *
  */
 public class Project3 {
     static PhoneBill newBill = new PhoneBill(); // Instance of a phone bill to pass the new call to.

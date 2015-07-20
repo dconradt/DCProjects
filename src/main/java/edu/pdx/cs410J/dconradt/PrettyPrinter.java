@@ -10,7 +10,8 @@ import java.util.Collection;
 import java.util.Date;
 
 /**
- * Created by Dan on 7/19/2015.
+ * @author Dan Conradt
+ * Created on 7/19/2015.
  * PrettyPrinter implements PhoneBillDumper with a formatted output. The options are to print to a provided file or if "-" is
  * provided it will print the same format to the console.
  */
@@ -54,6 +55,10 @@ public class PrettyPrinter implements PhoneBillDumper {
         }
     }
 
+    /**
+     * Function to pretty print the phone bill to the console.
+     * @param billRecord a record of a phone call to be formatted to a user friendly output.
+     */
     private void consolePrint(PhoneCall billRecord) {
         SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
         Date endCall = null;
@@ -104,7 +109,5 @@ public class PrettyPrinter implements PhoneBillDumper {
         String phoneBillRecord = "\t" + billRecord.getCaller() + "\t" + billRecord.getCallee() + "\t"
                 + billRecord.getStartTimeString() + "\t\t" + billRecord.getEndTimeString() + "\t\t" + duration + " minutes";
         newRecord.println(phoneBillRecord);
-
-
     }
 }
