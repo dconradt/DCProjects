@@ -125,7 +125,11 @@ public class PhoneCall extends AbstractPhoneCall implements Comparable<PhoneCall
             return 1;
         else if(startTime.before(call.getStartTime()))
             return -1;
-        else
-            return 0;
+        else if(startTime.equals(call.getStartTime()))
+            if(callerNumber.compareTo(call.getCaller()) > 0)
+                return 1;
+            else if(callerNumber.compareTo(call.getCaller()) < 0)
+                return -1;
+        return 0;
     }
 }

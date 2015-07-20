@@ -59,6 +59,7 @@ public class Project3 {
         boolean print = false; /** Print flag set when option to print is requested. */
         boolean file = false; /** File name is present so writ to file.*/
         boolean pretty = false;/** Determines if pretty file was requested.*/
+        boolean prettyConsole = false; /** Determines if pretty prints to console.*/
 
         SimpleDateFormat dateFormatter = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
 
@@ -80,12 +81,12 @@ public class Project3 {
                 optionCount = optionCount + 2;
                 ++i;
             }else if (args[i].equalsIgnoreCase("-README")) {
-                System.out.println("\n***README***\n\nDan Conradt - Project3\n\nI have implemented two more classes to project1 and modified project1 to be project2 - Project3, TextDumper implements PhoneBillDumper and\n" +
-                        "TestParser implements PhoneBillParser. This program takes an input of upto 3 options and requires 5 arguments describing a phone call.\nThe addtional classes will parse and write to a phone bill file." +
-                        "  The TextParser will parse the file into a phone bill collection at\nthe start of the programe and validate the text file data to ensure the file is of the correct format.  It validates the options and\narguments " +
-                        "for validity and formatting.  The date and time must be actual dates in the form specified as mm/dd/yyyy hh:mm.  The Phone\nnumbers must be of the form nnn-nnn-nnnn. Errors in formating or validity of the phone " +
-                        "numbers or date and time will output a message\nand the program will exit.  If all arguments are valid the program will create a new phone call record using and add it to the array list\nof phone calls in the " +
-                        "phone bill class.  If the option -README is provided then the program will output the README text description of the\nprogram and then exit. If no file exists then a new one will be created and written too, by the " +
+                System.out.println("\n***README***\n\nDan Conradt - Project3\n\nI have implemented formatting the dates/time using the java.util.date and added the class PrettyPrinter to the project2 and updated it\nto Project3, PrettyPrinter implements PhoneBillDumper and " +
+                        "This program takes an input of upto 4 options and requires 5 arguments describing\na phone call.  The addtional class will parse and write to a user friendly formatted phone bill file or to the console if '-' is provided\n" +
+                        "after -pretty option.  The TextParser will parse the file into a phone bill collection at the start of the programe and validate the text file\ndata to ensure the file elements are of the correct format.  It validates the options and arguments " +
+                        "for validity and formatting.  The date and\ntime must be actual dates in the form specified as mm/dd/yyyy hh:mm am|pm using a 12 hour clock.  The Phone numbers must be of the form nnn-nnn-nnnn.\nErrors in formating or validity of the phone " +
+                        "numbers or date and time will output a message and the program will exit.  If all arguments are valid\nthe program will create a new phone call record and add it to the array list of phone calls in the " +
+                        "phone bill class.  If the option -README is\nprovided then the program will output the README text description of the program and then exit. If no file exists for either -textFile or -pretty\nthen a new one will be created and written too, by the " +
                         "TextDumper class.");
                 System.exit(1);
             } else if (args[i].equalsIgnoreCase("-textFile")) {
@@ -115,8 +116,8 @@ public class Project3 {
 
             argIndex = optionCount;
         }
-       // else
-         //   argIndex = optionCount;
+        else
+            argIndex = optionCount;
 
         try {
             if (newBill.getCustomer() == null || args[argIndex].equals(newBill.getCustomer()))
